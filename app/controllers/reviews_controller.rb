@@ -5,7 +5,7 @@ class ReviewsController < ApplicationController
     @rental = Rental.find(params[:rental_id])
     @review.rental = @rental
     @review.save!
-    redirect_to rentals_path
+    redirect_to rentals_path(s)
   end
 
   private

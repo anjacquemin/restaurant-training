@@ -1,38 +1,30 @@
-<h2>Here are all your rental : <%= "#{@user.first_name} #{@user.last_name}" %></h2>
-<% @rentals.each do |rental| %>
-<p><%=rental.restaurant.name  %> </p>
-<p><%= rental.date %> </p>
-<p>REVIEWS:</p>
-<p><%= rental.number_of_people %> </p>
-<% rental.reviews.each do |review| %>
-  <p><%= review.description %></p>
-  <p><%= review.rating %></p>
-<% end %>
-<%= simple_form_for [ rental, @review] do |f| %>
-  <%=f.input :description %>
-  <%=f.input :rating %>
-  <%= f.submit "Submit review", class: "btn btn-primary" %>
-<% end %>
-<%# <button class="" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Review</button> %>
-<% end %>
-
-
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Schedule</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <%# <%= simple_form_for [ @rental, @review] do |f| %>
-          <%# <%=f.input :description %> %>
-          <%# <%=f.input :rating %> %>
-          <%# <%= f.submit "Submit review", class: "btn btn-primary" %> %>
-        <%# <% end %> %> %>
-      <div class="modal-footer">
-      </div>
+<div class="container my-4">
+  <h2>Here are all your rental : <%= "#{@user.first_name} #{@user.last_name}" %></h2>
+  <% @rentals.each do |rental| %>
+  <div class="d-flex flex-column align-items-center my-5 py-3" style="background-color:white; border-radius:10px">
+      <p><%=rental.restaurant.name  %> </p>
+      <p><%= rental.date %> </p>
+      <p><%= rental.number_of_people %> people </p>
+      <p>REVIEWS:</p>
+      <% rental.reviews.each do |review| %>
+        <div class="review">
+          <img src='https://kitt.lewagon.com/placeholder/users/arthur-littm' class="avatar-large" />
+          <div class="review-content d-flex justify-content-between">
+            <div>
+              <p><%=review.rental.user.first_name%> <%=review.rental.user.last_name%></p>
+              <p><%=review.description%></p>
+            </div>
+            <div>
+              <p><%=review.rating%></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      <%= simple_form_for [ rental, @review] do |f| %>
+        <%=f.input :description %>
+        <%=f.input :rating %>
+        <%= f.submit "Submit review", class: "btn btn-primary" %>
+      <% end %>
     </div>
-  </div>
+  <% end %>
 </div>

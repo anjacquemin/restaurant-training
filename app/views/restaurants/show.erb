@@ -1,59 +1,51 @@
 <div class="container">
   <div class="row my-5">
-    <div class="col-6">
-      <h2><%= @restaurant.name %></h2>
-      <p><%= @restaurant.description %></p>
-      <div>
+    <div class="col-8">
+      <div class="d-flex flex-column align-items-center">
+        <h2><%= @restaurant.name %></h2>
+        <p><%= @restaurant.description %></p>
+        <img style="width:80%; height:50%" src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
       </div>
     </div>
 
-    <div class="col-6">
-      <h2>Find a table</h2>
-      <%= simple_form_for [ @restaurant, @rental] do |f| %>
-        <%=f.input :date %>
-        <%=f.input :number_of_people %>
-        <%= f.submit "Book", class: "btn btn-primary" %>
-      <% end %>
+    <div class="col-4">
+      <div class="d-flex flex-column align-items-center">
+        <h2>Find a table</h2>
+        <%= simple_form_for [ @restaurant, @rental] do |f| %>
+          <%=f.input :date %>
+          <%=f.input :number_of_people %>
+          <%= f.submit "Book", class: "btn btn-primary" %>
+        <% end %>
+      </div>
     </div>
   </div>
 
   <div class="row my-5">
-    <div class="col-6">
-      <h2>Reviews</h2>
-      <%@restaurant.reviews.each do |review|%>
-        <p><%=review.rental.user.first_name%> <%=review.rental.user.last_name%></p>
-        <p><%=review.description%></p>
-        <p><%=review.rating%></p>
-      <%end%>
+    <div class="col-8">
+      <div class="d-flex flex-column align-items-center">
+        <h2>Reviews</h2>
+        <%@restaurant.reviews.each do |review|%>
+          <div class="review">
+            <img src='https://kitt.lewagon.com/placeholder/users/arthur-littm' class="avatar-large" />
+            <div class="review-content d-flex justify-content-between">
+              <div>
+                <p><%=review.rental.user.first_name%> <%=review.rental.user.last_name%></p>
+                <p><%=review.description%></p>
+              </div>
+              <div>
+                <p><%=review.rating%></p>
+              </div>
+            </div>
+          </div>
+        <%end%>
+      </div>
     </div>
 
-    <div class="col-6">
-      <h2>Localization</h2>
-      <%= image_tag "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/2.3381,48.8693,10.45,0,0/600x1000?access_token=#{ENV['MAPBOX_KEY']}", id:"map-show" %>
+    <div class="col-4">
+      <div class="d-flex flex-column align-items-center">
+        <h2>Localization</h2>
+        <%= image_tag "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/2.3381,48.8693,10.45,0,0/600x1000?access_token=#{ENV['MAPBOX_KEY']}", id:"map-show" %>
+      </div>
     </div>
   </div>
-
-
 </div>
-
-
-
-
-
-<h2><%=@restaurant.name%></h2>
-<h3><%@restaurant.reviews.each do |review|%></h2>
-  <p><%=review.rental.user.first_name%> <%=review.rental.user.last_name%></p>
-  <p><%=review.description%></p>
-  <p><%=review.rating%></p>
-<%end%>
-
-<h3>Booking</h3>
-<!-- app/views/restaurants/_form.html.erb -->
-
-
-<h3>REVIEWS</h3>
-<% @restaurant.reviews.each do |review| %>
-  <p><%= "#{review.rental.user.first_name} #{review.rental.user.last_name}" %></p>
-  <p><%= review.description %></p>
-  <p><%= review.rating %></p>
-<% end %>
