@@ -1,3 +1,24 @@
-<% @restaurants.each do |restaurant|  %>
-  <p><%=link_to restaurant.name, restaurant_path(restaurant) %></p>
-<% end %>
+
+<div class="d-flex justify-content-between">
+  <div class="m-3">
+    <h2>All our offers</h2>
+    <div class="cards-grid">
+      <% @restaurants.each do |restaurant|  %>
+        <div class="card-trip">
+          <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
+          <div class="card-trip-infos">
+            <div>
+              <h2><%= restaurant.name %></h2>
+              <p>Address: <%= restaurant.address %></p>
+              <p>Description: <%= restaurant.description %></p>
+              <%=link_to "Book", restaurant_path(restaurant), class:"btn btn-flat" %>
+            </div>
+            <h2><%= restaurant.category %></h2>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="map-display">
+    <%= image_tag "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/2.3381,48.8693,10.45,0,0/600x1000?access_token=#{ENV['MAPBOX_KEY']}", id:"map" %>
+</div>

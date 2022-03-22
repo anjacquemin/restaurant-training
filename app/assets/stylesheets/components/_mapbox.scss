@@ -1,0 +1,16 @@
+.map-display {
+  flex-grow: 1;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+}
+
+#map {
+  height:100%;
+  width:100%;
+}
+
+#map-show {
+  height:50vh;
+  width:100%;
+}

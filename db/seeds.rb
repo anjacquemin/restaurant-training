@@ -58,6 +58,7 @@ end
   restaurant = Restaurant.new({
     name: Faker::Restaurant.name,
     description: Faker::Lorem.sentence(word_count: 8),
+    address: Faker::Address.full_address,
     category: Faker::Restaurant.type,
     rating: rand(0..5),
     user: User.first
