@@ -5,3 +5,129 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+
+require 'faker'
+# For cloudinary
+require "open-uri"
+
+puts "Destroying previous data..."
+
+User.destroy_all
+# Review.destroy_all
+# Rental.destroy_all
+Restaurant.destroy_all
+
+puts "Data destroyed, start seeding ..."
+
+antho = User.new({
+  first_name: "Antho",
+  last_name: "jacquemin",
+  email: "antho@gmail.com",
+  restaurant_owner: true,
+  password: "PASSWORD",
+  password_confirmation: "PASSWORD"
+})
+
+antho.save!
+
+raph = User.new({
+  first_name: "Raph",
+  last_name: "Grelon",
+  email: "raph@gmail.com",
+  restaurant_owner: false,
+  password: "PASSWORD",
+  password_confirmation: "PASSWORD"
+})
+
+raph.save!
+
+10.times do
+  user = User.new({
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
+    email: Faker::Internet.email,
+    restaurant_owner: false,
+    password: "PASSWORD",
+    password_confirmation: "PASSWORD"
+  })
+  user.save!
+end
+
+10.times do
+  restaurant = Restaurant.new({
+    name: Faker::Restaurant.name,
+    description: Faker::Lorem.sentence(word_count: 8),
+    category: Faker::Restaurant.type,
+    rating: rand(0..5),
+    user: User.first
+  })
+  restaurant.save!
+end
+
+10.times do
+  rental = Rental.new({
+    date: DateTime.new(2022, rand(3..5), rand(1..28), rand(12..15), [0, 30].sample),
+    restaurant: Restaurant.all.sample,
+    number_of_people: rand(0..5),
+    user: User.first
+  })
+  rental.save!
+end
+
+
+10.times do
+  review = Review.new({
+    description: Faker::Lorem.sentence(word_count: 8),
+    rating: rand(0..5),
+    rental: Rental.all.sample
+  })
+  review.save!
+end
+
+
+####################"LOOGING THE RESULTS FOR TESTING"#############
+puts "#############BEGGINING OF TESTS FOLLOWING SEED IMPLEMENTATION############"
+p ""
+p ""
+
+p "-----------TEST IF SEED HAS BEEN ADDED----------"
+
+puts "------------------User------------------"
+users = User.all
+p users
+puts "-------------------------------------------"
+puts ""
+
+puts "------------------Restaurant------------------"
+restaurants = Restaurant.all
+p restaurants
+puts "-------------------------------------------"
+puts ""
+
+
+puts "------------------rental------------------"
+rentals = Rental.all
+p rentals
+puts "-------------------------------------------"
+puts ""
+
+puts "------------------review------------------"
+reviews = Review.all
+p reviews
+puts "-------------------------------------------"
+puts ""
+
+
+p "-----------TEST OF Active record associations----------"
+p "Restaurant : "
+restaurants.each { |restaurant|
+  p "Reviews : "
+  p restaurant.reviews
+}
+
+
+p "-----------TEST OF Active records ----------"
+# to be completed
+
+puts "#########END OF TEST#########"
