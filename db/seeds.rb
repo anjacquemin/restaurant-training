@@ -13,12 +13,13 @@ require "open-uri"
 
 puts "Destroying previous data..."
 
-User.destroy_all
-# Review.destroy_all
+Review.destroy_all
 # Rental.destroy_all
-Restaurant.destroy_all
+# Restaurant.destroy_all
+User.destroy_all
 
 puts "Data destroyed, start seeding ..."
+
 
 antho = User.new({
   first_name: "Antho",
@@ -29,6 +30,8 @@ antho = User.new({
   password_confirmation: "PASSWORD"
 })
 
+file = URI.open("https://avatars.githubusercontent.com/u/7106777?v=4")
+antho.photo.attach(io: file, filename: "#{antho.last_name}-1")
 antho.save!
 
 raph = User.new({
