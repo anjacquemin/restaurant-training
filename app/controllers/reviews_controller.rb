@@ -4,9 +4,13 @@ class ReviewsController < ApplicationController
     @review = Review.new(review_params)
     @rental = Rental.find(params[:rental_id])
     @review.rental = @rental
-    @review.save!
     authorize @review
-    redirect_to rentals_path()
+
+    if @review.save
+      redirect_to rentals_path()
+    else
+      render 'rentals/index'
+    end
   end
 
   def edit
