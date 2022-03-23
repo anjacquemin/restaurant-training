@@ -1,8 +1,18 @@
 class RestaurantsController < ApplicationController
   def index
-    @restaurants = Restaurant.all
-    # authorize @restaurants
-    @restaurants = policy_scope(Restaurant).all
+    # to_handle search bar
+    if params[:query].present?
+      @restaurants = policy_scope(Restaurant.search_by_name_and_category(params[:query])).all
+    else
+      @restaurants = policy_scope(Restaurant).all
+    end
+
+    @markers = @restaurants.geocoded.map do |restaurant|
+      {
+        lat: restaurant.latitude,
+        lng: restaurant.longitude
+      }
+    end
   end
 
   def show

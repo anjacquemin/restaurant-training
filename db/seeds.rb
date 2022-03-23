@@ -57,15 +57,18 @@ raph.save!
   user.save!
 end
 
+street_numbers = (1..20).to_a
+
 10.times do
   restaurant = Restaurant.new({
     name: Faker::Restaurant.name,
     description: Faker::Lorem.sentence(word_count: 8),
-    address: Faker::Address.full_address,
+    address: "#{street_numbers.last} rue oberkampf, Paris ",
     category: Faker::Restaurant.type,
     rating: rand(0..5),
     user: User.first
   })
+  street_numbers.pop
   restaurant.save!
 end
 

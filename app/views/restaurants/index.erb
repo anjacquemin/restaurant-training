@@ -1,4 +1,13 @@
 
+<%= form_tag restaurants_path, method: :get do %>
+  <%= text_field_tag :query,
+    params[:query],
+    class: "form-control",
+    placeholder: "Find a restaurant"
+  %>
+  <%= submit_tag "Search", class: "btn btn-primary" %>
+<% end %>
+
 <div class="d-flex justify-content-between">
   <div class="m-3">
     <h2>All our offers</h2>
@@ -19,6 +28,11 @@
       <% end %>
     </div>
   </div>
-  <div class="map-display">
-    <%= image_tag "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/2.3381,48.8693,10.45,0,0/600x1000?access_token=#{ENV['MAPBOX_KEY']}", id:"map" %>
+
+  <!-- need id to override class property of mapbox -->
+  <div id="map-display"
+    data-controller="mapbox"
+    data-mapbox-markers-value="<%= @markers.to_json %>"
+    data-mapbox-api-key-value="<%= ENV['MAPBOX_KEY'] %>">
+  </div>
 </div>
