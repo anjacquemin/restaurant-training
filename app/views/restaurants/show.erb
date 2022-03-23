@@ -34,6 +34,7 @@
               </div>
               <div>
                 <p><%=review.rating%></p>
+                <%= link_to '<i class="fas fa-pencil-alt"></i>'.html_safe, edit_restaurant_review_path(@restaurant, review) %>
               </div>
             </div>
           </div>

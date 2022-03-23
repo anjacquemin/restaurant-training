@@ -6,12 +6,14 @@ class RentalsController < ApplicationController
     @rental.restaurant = @restaurant
     @rental.user = current_user
     @rental.save!
+    authorize @rental
     redirect_to rentals_path()
   end
 
   def index
     @rentals = Rental.where(user_id: current_user)
     @user = current_user
+    @rentals = policy_scope(Rental).all
     @review = Review.new
   end
 
