@@ -69,6 +69,8 @@ end
   restaurant.save!
 end
 
+
+
 10.times do
   rental = Rental.new({
     date: DateTime.new(2022, rand(3..5), rand(1..28), rand(12..15), [0, 30].sample),
@@ -79,8 +81,18 @@ end
   rental.save!
 end
 
-
 10.times do
+  rental = Rental.new({
+    date: DateTime.new(2022, rand(3..5), rand(1..28), rand(12..15), [0, 30].sample),
+    restaurant: Restaurant.all.sample,
+    number_of_people: rand(0..5),
+    user: User.where(first_name: "Raph")[0]
+  })
+  rental.save!
+end
+
+
+20.times do
   review = Review.new({
     description: Faker::Lorem.sentence(word_count: 8),
     rating: rand(0..5),

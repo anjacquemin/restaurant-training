@@ -34,7 +34,12 @@
               </div>
               <div>
                 <p><%=review.rating%></p>
-                <%= link_to '<i class="fas fa-pencil-alt"></i>'.html_safe, edit_restaurant_review_path(@restaurant, review) %>
+                <% if policy(review).create?  %>
+                  <%= link_to '<i class="fas fa-pencil-alt"></i>'.html_safe, edit_restaurant_review_path(@restaurant, review) %>
+                <% end %>
+                <% if policy(review).create?  %>
+                  <%= link_to '<i class="far fa-trash-alt"></i>'.html_safe, restaurant_review_path(@restaurant, review), method: "delete" %>
+                <% end %>
               </div>
             </div>
           </div>
