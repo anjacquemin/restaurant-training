@@ -5,9 +5,9 @@ class ReviewsController < ApplicationController
     @rental = Rental.find(params[:rental_id])
     @review.rental = @rental
     authorize @review
-
+    @rentals = Rental.where(user_id: current_user)
     if @review.save
-      redirect_to rentals_path()
+      redirect_to rentals_path(anchor: "review-#{@review.id}")
     else
       render 'rentals/index'
     end
@@ -15,25 +15,25 @@ class ReviewsController < ApplicationController
 
   def edit
     @review = Review.find(params[:id])
-    # need the restaurant to go back to the restaurant show
-    @restaurant = Restaurant.find(params[:restaurant_id])
     authorize @review
   end
 
   def update
     @review = Review.find(params[:id])
     @review.update(review_params)
-    @restaurant = Restaurant.find(params[:restaurant_id])
     authorize @review
-    redirect_to restaurant_path(@restaurant)
+    if @review.save
+      redirect_to restaurant_path(@review.rental.restaurant)
+    else
+      render 'edit'
+    end
   end
 
   def destroy
     @review = Review.find(params[:id])
-    @restaurant = Restaurant.find(params[:restaurant_id])
     authorize @review
     @review.destroy
-    redirect_to restaurant_path(@restaurant)
+    redirect_to restaurant_path(@review.rental.restaurant)
   end
   private
 

@@ -8,6 +8,9 @@ Bundler.require(*Rails.groups)
 
 module RestaurantTraining
   class Application < Rails::Application
+    # When using remote true, allow to have same behavior (without remote true) if the browser does not support JS
+    config.action_view.embed_authenticity_token_in_remote_forms = true
+
     config.generators do |generate|
       generate.assets false
       generate.helper false
@@ -15,7 +18,6 @@ module RestaurantTraining
     end
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
-
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

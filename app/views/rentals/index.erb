@@ -1,5 +1,5 @@
 <div class="container my-4">
-  <h2>Here are all your rental : <%= "#{@user.first_name} #{@user.last_name}" %></h2>
+  <h2>Here are all your rental : <%= "#{current_user.first_name} #{current_user.last_name}" %></h2>
   <% @rentals.each do |rental| %>
   <div class="d-flex flex-column align-items-center my-5 py-3" style="background-color:white; border-radius:10px">
       <p><%=rental.restaurant.name  %> </p>
@@ -7,7 +7,7 @@
       <p><%= rental.number_of_people %> people </p>
       <p>REVIEWS:</p>
       <% rental.reviews.each do |review| %>
-        <div class="review">
+        <div class="review" id=<%="review-#{review.id}"  %>>
           <img src='https://kitt.lewagon.com/placeholder/users/arthur-littm' class="avatar-large" />
           <div class="review-content d-flex justify-content-between">
             <div>
@@ -20,7 +20,7 @@
           </div>
         </div>
       <% end %>
-      <%= simple_form_for [ rental, @review] do |f| %>
+      <%= simple_form_for [ rental, @review], remote: true do |f| %>
         <%=f.input :description %>
         <%=f.input :rating %>
         <%= f.submit "Submit review", class: "btn btn-primary" %>
